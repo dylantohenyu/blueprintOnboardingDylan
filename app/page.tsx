@@ -1,49 +1,68 @@
-import { FiHeart as HeartIcon } from 'react-icons/fi';
-import { GoPaperAirplane as ShareIcon } from 'react-icons/go';
-import { LuUserCircle as ProfileIcon } from 'react-icons/lu';
-import styles from './styles.module.css';
+'use client';
+
+import { useEffect, useState } from 'react';
+import Comment from '@/app/components/Comments';
+import Post from '@/app/components/Post';
+import { getComments, getPosts } from '@/supabase/query';
 import '../assets/global.css';
+import { CommentProps } from '@/app/components/Comments';
+import { PostProps } from '@/app/components/Post';
 
 export default function Home() {
+  // (dt) Step 1: Create state to hold posts
+  const [posts, setPosts] = useState<PostProps[]>([]);
+  const [comments, setComments] = useState<CommentProps[]>([]);
+  // (dt): We first start with an empty array of posts useState([])
+
+  // (dt) Step 2: Fetch data from Supabase when component loads
+  useEffect(() => {
+    // (dt) We only run fetch data once the component mounts (i think when page renders??)
+    async function fetchData() {
+      // (dt) This line calls Supabase getPosts() function and stores the results using setPosts(data)
+      const data = await getPosts();
+      console.log('Fetched posts:', data);
+      setPosts(data);
+      const commentsData = await getComments(); // Example post_id
+      console.log('Fetched comments for post 1:', commentsData);
+      setComments(commentsData);
+    }
+
+    fetchData();
+  }, []); // this will run once the page loads
+
+  // (dt) Step 3: We render posts
   return (
-    <main className={styles.main}>
-      <div className={styles.content}>
-        <ProfileIcon size={24} />
-        <p>rbeggs</p>
-        <p>September 19</p>
-        <p>
-          In response to the growing homelessness crisis in San Francisco, a
-          local nonprofit organization, Code Tenderloin, has launched a
-          comprehensive initiative aimed at providing long-term solutions for
-          individuals experiencing homelessness. The organization, founded in
-          2015, is dedicated to addressing both immediate needs and underlying
-          causes of homelessness through a combination of shelter services, job
-          training programs, and mental health support. Read more online:
-          https://www.codetenderloin.org/
-        </p>
-
-        <p>
-          Image Link:
-          https://cdn.britannica.com/51/178051-050-3B786A55/San-Francisco.jpg
-        </p>
-
-        <HeartIcon size={24} />
-        <p>256 Likes</p>
-        <ShareIcon size={24} />
-
-        <ProfileIcon size={24} />
-        <p>daviddd</p>
-        <p>September 20</p>
-        <p>
-          This organization is doing amazing work tackling the complex root
-          causes of the issue.
-        </p>
-
-        <ProfileIcon size={24} />
-        <p>vppraggie</p>
-        <p>September 21</p>
-        <p>Thanks for sharing!</p>
-      </div>
+    <main>
+      {posts.length > 0 ? (
+        posts.map(post => (
+          <>
+            <Post
+              key={post.id}
+              username={post.username}
+              date={post.date}
+              image={post.image}
+              likeCount={post.likeCount}
+              text={post.text}
+              id={0}
+            />
+            {/* (dt) Filter comments for the current post and render them using the filter command */}
+            {comments
+              .filter(comment => comment.post === post.id)
+              .map(filteredComment => (
+                <Comment
+                  key={filteredComment.id}
+                  date={filteredComment.date}
+                  username={filteredComment.username}
+                  comment={filteredComment.comment}
+                  post={filteredComment.post}
+                  id={0}
+                />
+              ))}
+          </>
+        ))
+      ) : (
+        <p>Loading posts...</p>
+      )}
     </main>
   );
 }
