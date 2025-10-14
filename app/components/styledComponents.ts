@@ -1,4 +1,9 @@
-.main {
+import styled from 'styled-components';
+
+export const p = styled.p;
+
+// define accountDetails
+export const main = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
@@ -7,15 +12,14 @@
   justify-content: center;
   margin: 0;
   padding: 0;
-}
-
-.content {
+`;
+export const Content = styled.div`
   max-width: 350px;
   height: 100%;
   border: 1px solid grey;
-}
+`;
 
-.mainContent {
+export const mainContent = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -29,9 +33,15 @@
   margin-left: 15px;
   margin-right: 15px;
   margin-bottom: 15px;
-}
+`;
+export const accountPicture = styled.div`
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  flex-shrink: 0;
+`;
 
-.accountDetails {
+export const accountDetails = styled.div`
   justify-content: flex-start;
   width: 345px;
   align-items: flex-start;
@@ -42,16 +52,9 @@
   height: 100%;
   width: 100%;
   flex-direction: row;
-}
+`;
 
-.accountPicture {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.accountName {
+export const accountName = styled.div`
   display: flex;
   width: 49px;
   height: 9px;
@@ -64,9 +67,9 @@
   font-weight: bold;
   line-height: 18px;
   letter-spacing: -0.07px;
-}
+`;
 
-.accountDate {
+export const accountDate = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -82,9 +85,9 @@
   align-items: right;
   margin-left: 160px;
   margin-top: 10px;
-}
+`;
 
-.image {
+export const image = styled.div`
   width: 336px;
   padding-left: 7px;
   padding-right: 7px;
@@ -92,25 +95,25 @@
   flex-shrink: 0;
   border-radius: 10px;
   padding-bottom: 15px;
-}
+`;
 
-.reactions {
+export const reactions = styled.div`
   display: flex;
   justify-content: flex-start;
   flex-direction: row;
   border-bottom: 1px solid black;
   margin-bottom: 17px;
   padding-bottom: 16px;
-}
+`;
 
-.heart {
+export const heart = styled.div`
   width: 24px;
   height: 21px;
   flex-shrink: 0;
   margin-left: 5px;
-}
+`;
 
-.likes {
+export const likes = styled.div`
   font-size: 13px;
   font-style: normal;
   font-weight: 600;
@@ -119,14 +122,15 @@
   margin-left: 12px;
   width: 60px;
   margin-top: 4px;
-}
-.shareIcon {
+`;
+
+export const shareIcon = styled.div`
   width: 23px;
   flex-shrink: 0;
   margin-left: 220px;
-}
+`;
 
-.comments {
+export const comments = styled.div`
   display: flex;
   width: 309px;
   flex-direction: column;
@@ -137,8 +141,8 @@
   line-height: 18px;
   font-style: normal;
   margin-left: 41px;
-}
+`;
 
-.commentPage {
+export const commentPage = styled.div`
   padding-bottom: 20px;
-}
+`;
